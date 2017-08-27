@@ -16,4 +16,25 @@ class Parser(object):
         '''
     
     def getDictionary(self):
-        return {}
+        """
+        A B C
+        A X 1
+        A X 2
+        C F H
+        H K 1
+        """
+        
+        dictRdf = {
+            'A' : {
+                'B' : 'C',
+                'X' : [1,2]
+            },
+            'C' : {
+                'F' : 'H'
+            },
+            'H' : {
+                'K' : 1    
+            }
+        }
+
+        return dictRdf
