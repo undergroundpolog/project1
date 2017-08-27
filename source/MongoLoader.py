@@ -9,9 +9,11 @@ class MongoLoader(object):
     classdocs
     '''
 
-
-    def __init__(self, params):
+    def __init__(self):
+        print 'inside MongoLoader'
         '''
         Constructor
         '''
-        
+    
+    def loadTuplesToMongo(self,rdfDict):
+        pass 

@@ -9,9 +9,11 @@ class Parser(object):
     classdocs
     '''
 
-
-    def __init__(self, params):
+    def __init__(self):
+        print 'inside Parser'
         '''
         Constructor
         '''
-        
+    
+    def getDictionary(self):
+        return {}
