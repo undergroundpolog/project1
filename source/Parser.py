@@ -4,16 +4,15 @@ Created on 27 ago. 2017
 @author: alejandro
 '''
 
+from fileutils.TurtleReader import TurtleReader
+
 class Parser(object):
-    '''
-    classdocs
-    '''
 
     def __init__(self):
         print 'inside Parser'
-        '''
-        Constructor
-        '''
+        turtleReader = TurtleReader()
+        print turtleReader.getPrefixs()
+        print turtleReader.getNextTupleSet()
     
     def getDictionary(self):
         """
