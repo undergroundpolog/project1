@@ -18,6 +18,8 @@ class TurtleReader(object):
         self.__prefix = {}
         self.__index = 0
         self.__prefixPattern = re.compile(r'^@.+\.$')
+        self.__endOfEntryPattern = re.compile(r'\.\s*$')
+        self.__entryParser = re.compile(r'".+"@?\w{2} |".+" |\S+')
         
         #preparations
         self.__exploreFile()
@@ -66,7 +68,11 @@ class TurtleReader(object):
             self.__line_offset[self.__index])
         
         # TODO : parse in batch!!!
-        #for line in self.__file:
-        #    print line
-                
+        entrySoFar = ''
+        for line in self.__file:
+            entrySoFar += line
+            if self.__endOfEntryPattern.search(line) != None:
+                print 'final pattern > '+entrySoFar
+                print self.__entryParser.findall(entrySoFar)
+                entrySoFar = ''
                 
