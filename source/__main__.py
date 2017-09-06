@@ -5,5 +5,4 @@ Created on 27 ago. 2017
 '''
 from RDFLoader import RDFLoader
 if __name__ == '__main__':
-    print "inside RDFLoader"
     RDFLoader();

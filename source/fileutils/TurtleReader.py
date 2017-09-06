@@ -4,14 +4,19 @@ Created on 29 ago. 2017
 @author: alejandro
 '''
 
+from StateMachine import StateMachine
 from Config import Config
 import re
 
 class TurtleReader(object):
 
     def __init__(self):
+        #initializing state machine
+        self.__stateMachine = StateMachine()
+        
         config = Config()
         self.__ttlFile = config.get('basic', 'ttl_file')
+        self.__batchSize = int(config.get('basic','batch_size'))
         
         #class vars
         # TODO check how to do it better
@@ -64,15 +69,34 @@ class TurtleReader(object):
     Returns the next set of RDF tuples read from the file
     """
     def getNextTupleSet(self):
+        tuples = []
+        
+        if self.__index >= len(self.__line_offset):
+            return None
+        
         self.__file.seek(
             self.__line_offset[self.__index])
         
         # TODO : parse in batch!!!
         entrySoFar = ''
+        batchIndex = 0
         for line in self.__file:
+            if batchIndex >= self.__batchSize:
+                break
+            
             entrySoFar += line
+            self.__index += 1
             if self.__endOfEntryPattern.search(line) != None:
-                print 'final pattern > '+entrySoFar
-                print self.__entryParser.findall(entrySoFar)
-                entrySoFar = ''
+                entrySoFarAsList = self.__entryParser.findall(entrySoFar) 
                 
+                print entrySoFarAsList
+                entrySoFarAsDict = self.__stateMachine.initState(entrySoFarAsList)
+                print entrySoFarAsDict
+                
+                
+                tuples.append(entrySoFarAsDict)
+                
+                entrySoFar = ''
+                batchIndex += 1
+                
+        return tuples

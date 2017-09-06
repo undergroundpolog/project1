@@ -14,8 +14,16 @@ class RDFLoader(object):
 
     def __init__(self):
         parser = Parser();
-        rdfLoader = parser.getDictionary()
         mongoLoader = MongoLoader();
-        mongoLoader.loadTuplesToMongo(rdfLoader)
+        batchCount = 1
+        while True:
+            rdfLoader = parser.getDictionary()
+            
+            if rdfLoader == None:
+                break
+            
+            batchCount += 1
+            mongoLoader.loadTuplesToMongo(rdfLoader)
+            
     
         
