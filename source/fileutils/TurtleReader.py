@@ -6,7 +6,7 @@ Created on 29 ago. 2017
 
 from StateMachine import StateMachine
 from Config import Config
-import re
+import re, sys
 
 class TurtleReader(object):
 
@@ -15,8 +15,12 @@ class TurtleReader(object):
         self.__stateMachine = StateMachine()
         
         config = Config()
-        self.__ttlFile = config.get('basic', 'ttl_file')
-        self.__batchSize = int(config.get('basic','batch_size'))
+        try:
+            self.__ttlFile = config.get('basic', 'ttl_file')
+            self.__batchSize = int(config.get('basic','batch_size'))
+        except:
+            print("Error reading property from configuration file:", sys.exc_info())
+            sys.exit()
         
         #class vars
         # TODO check how to do it better
@@ -89,9 +93,7 @@ class TurtleReader(object):
             if self.__endOfEntryPattern.search(line) != None:
                 entrySoFarAsList = self.__entryParser.findall(entrySoFar) 
                 
-                print entrySoFarAsList
                 entrySoFarAsDict = self.__stateMachine.initState(entrySoFarAsList)
-                print entrySoFarAsDict
                 
                 
                 tuples.append(entrySoFarAsDict)

@@ -13,7 +13,7 @@ class Parser(object):
         self.__turtleReader = TurtleReader()
         
         #just for testing
-        print self.__turtleReader.getPrefixs()
+        self.__turtleReader.getPrefixs()
         
     def getDictionary(self):
         dictRdf = self.__turtleReader.getNextTupleSet()
