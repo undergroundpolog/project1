@@ -60,3 +60,9 @@ Name of the Mongo database
 Mongo hostname
 #### Port
 Mongo port
+
+# Execute it
+Just go inside the source folder and run it with:
+```
+python __main__.py
+```
