@@ -11,7 +11,6 @@ class Config(object):
     classdocs
     '''
 
-
     def __init__(self):
         self.config = ConfigParser.ConfigParser()
         self.config.read('project1.cfg')

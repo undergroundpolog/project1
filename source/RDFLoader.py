@@ -6,6 +6,7 @@ Created on 27 ago. 2017
 
 from MongoLoader import MongoLoader
 from Parser import Parser
+import time
 
 class RDFLoader(object):
     '''
@@ -13,17 +14,23 @@ class RDFLoader(object):
     '''
 
     def __init__(self):
+        print time.strftime("%c")
         parser = Parser();
         mongoLoader = MongoLoader();
         batchCount = 1
+        threads = []
         while True:
-            rdfLoader = parser.getDictionary()
+            rdfLoader = parser.getDictionaries()
             
             if rdfLoader == None:
                 break
             
             batchCount += 1
-            mongoLoader.loadTuplesToMongo(rdfLoader)
+            thread = mongoLoader.loadTuplesToMongo(rdfLoader)
+            threads.append(thread)
             
+        for thread in threads:
+            thread.join()
+        print time.strftime("%c")    
     
         

@@ -6,8 +6,24 @@ Created on 27 ago. 2017
 
 from pymongo import MongoClient
 from fileutils.Config import Config
+import threading
 import sys
 
+
+class MongoWriterThread(threading.Thread):
+    
+    def __init__(self,db,dictionaries):
+        threading.Thread.__init__(self)
+        self.__db = db
+        self.__dictionaries = dictionaries
+        
+    def run(self):
+        try:
+            self.__db.turtle.insert_many(self.__dictionaries)
+        except:
+            print("Error trying to save the document to MongoDB:", sys.exc_info()[0])
+            sys.exit()
+            
 class MongoLoader(object):
     '''
     classdocs
@@ -25,10 +41,13 @@ class MongoLoader(object):
         self.__db = client[dbName]
     
     def loadTuplesToMongo(self,rdfDict):
-        for rdfDoc in rdfDict:
-            print 'Trying to save data'
-            try:
-                self.__db.turtle.insert_one(rdfDoc) 
-            except:
-                print("Error trying to save the document to MongoDB:", sys.exc_info()[0])
-                sys.exit()
+        print threading.activeCount()
+        thread = MongoWriterThread(self.__db,rdfDict)
+        thread.start()
+        return thread
+#     def loadTuplesToMongo(self,rdfDict):
+#         try:
+#             self.__db.turtle.insert_many(rdfDict)
+#         except:
+#             print("Error trying to save the document to MongoDB:", sys.exc_info()[0])
+#             sys.exit()

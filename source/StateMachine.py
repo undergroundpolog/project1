@@ -19,23 +19,24 @@ class StateMachine(object):
             self.__index = 0
             key = turtleAsList[self.__index]
             key = key.replace('.','\uff0E')
-            self.__turtleAsDict[key] = {}
+            self.__turtleAsDict['source'] = key
+            self.__turtleAsDict['semantic'] = {}
             self.__lastSeen = key
             self.__subject = key
             self.__index += 1
-            
             
             #state transition
             self.predicateState(turtleAsList)
         except:
             print("Error creating dictionary for object "+self.__subject, sys.exc_info()[0])
+            raise
             sys.exit()
         
         return self.__turtleAsDict
         
     def predicateState(self,turtleAsList):
         self.__lastSeen = turtleAsList[self.__index]
-        self.__turtleAsDict[self.__subject][self.__lastSeen] = None
+        self.__turtleAsDict['semantic'][self.__lastSeen] = None
         self.__index += 1
         
         #state transition
@@ -45,10 +46,10 @@ class StateMachine(object):
         while True:
             self.__token = turtleAsList[self.__index + 1]
             if self.__token == ',':
-                if self.__turtleAsDict[self.__subject][self.__lastSeen] == None:
-                    self.__turtleAsDict[self.__subject][self.__lastSeen] = [turtleAsList[self.__index]]
+                if self.__turtleAsDict['semantic'][self.__lastSeen] == None:
+                    self.__turtleAsDict['semantic'][self.__lastSeen] = [turtleAsList[self.__index]]
                 else:
-                    self.__turtleAsDict[self.__subject][self.__lastSeen].append(turtleAsList[self.__index])
+                    self.__turtleAsDict['semantic'][self.__lastSeen].append(turtleAsList[self.__index])
                     
                 self.__index += 2
                 
@@ -57,10 +58,10 @@ class StateMachine(object):
                 continue
                 
             else:
-                if self.__turtleAsDict[self.__subject][self.__lastSeen] == None:
-                    self.__turtleAsDict[self.__subject][self.__lastSeen] = turtleAsList[self.__index]
+                if self.__turtleAsDict['semantic'][self.__lastSeen] == None:
+                    self.__turtleAsDict['semantic'][self.__lastSeen] = turtleAsList[self.__index]
                 else:
-                    self.__turtleAsDict[self.__subject][self.__lastSeen].append(turtleAsList[self.__index])
+                    self.__turtleAsDict['semantic'][self.__lastSeen].append(turtleAsList[self.__index])
                 self.__index += 2
                 
             if self.__token == ';':

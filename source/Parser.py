@@ -15,7 +15,7 @@ class Parser(object):
         #just for testing
         self.__turtleReader.getPrefixs()
         
-    def getDictionary(self):
+    def getDictionaries(self):
         dictRdf = self.__turtleReader.getNextTupleSet()
         return dictRdf
     
