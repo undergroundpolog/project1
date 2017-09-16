@@ -44,3 +44,19 @@ In the web semantic terminology, the source ID of the subject is present in an a
 	}
 }
 ```
+# Configuration
+Edit the rdfmongoloader.cfg with the appropriate configuration.
+
+## basic
+#### ttl_file
+Absolute path of the TTL file
+#### batch_size
+Integer greater that 0 which represents the size of the batch of entries in the TTL file.
+
+## mongo
+#### name
+Name of the Mongo database
+#### Host
+Mongo hostname
+#### Port
+Mongo port
