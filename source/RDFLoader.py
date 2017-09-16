@@ -6,15 +6,10 @@ Created on 27 ago. 2017
 
 from MongoLoader import MongoLoader
 from Parser import Parser
-import time
 
 class RDFLoader(object):
-    '''
-    classdocs
-    '''
-
+    
     def __init__(self):
-        print time.strftime("%c")
         parser = Parser();
         mongoLoader = MongoLoader();
         batchCount = 1
@@ -30,7 +25,6 @@ class RDFLoader(object):
             threads.append(thread)
             
         for thread in threads:
-            thread.join()
-        print time.strftime("%c")    
+            thread.join() 
     
         

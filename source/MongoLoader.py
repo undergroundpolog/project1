@@ -14,21 +14,18 @@ class MongoWriterThread(threading.Thread):
     
     def __init__(self,db,dictionaries):
         threading.Thread.__init__(self)
-        self.__db = db
-        self.__dictionaries = dictionaries
+        self.db = db
+        self.dictionaries = dictionaries
         
     def run(self):
         try:
-            self.__db.turtle.insert_many(self.__dictionaries)
+            self.db.turtle.insert_many(self.dictionaries)
         except:
             print("Error trying to save the document to MongoDB:", sys.exc_info()[0])
             sys.exit()
             
 class MongoLoader(object):
-    '''
-    classdocs
-    '''
-
+    
     def __init__(self):
         config = Config()
         try:
@@ -37,17 +34,18 @@ class MongoLoader(object):
             print("Error reading property from configuration file: ", sys.exc_info()[0])
             sys.exit()
         
-        client = MongoClient()
-        self.__db = client[dbName]
+        mongo_host = config.get('mongo','host')
+        mongo_port = int(config.get('mongo','port'))
+        client = MongoClient(host=mongo_host, port=mongo_port)
+        self.db = client[dbName]
     
     def loadTuplesToMongo(self,rdfDict):
-        print threading.activeCount()
-        thread = MongoWriterThread(self.__db,rdfDict)
+        thread = MongoWriterThread(self.db,rdfDict)
         thread.start()
         return thread
 #     def loadTuplesToMongo(self,rdfDict):
 #         try:
-#             self.__db.turtle.insert_many(rdfDict)
+#             self.db.turtle.insert_many(rdfDict)
 #         except:
 #             print("Error trying to save the document to MongoDB:", sys.exc_info()[0])
 #             sys.exit()

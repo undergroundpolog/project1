@@ -10,12 +10,12 @@ from fileutils.TurtleReader import TurtleReader
 class Parser(object):
 
     def __init__(self):
-        self.__turtleReader = TurtleReader()
+        self.turtleReader = TurtleReader()
         
         #just for testing
-        self.__turtleReader.getPrefixs()
+        self.turtleReader.getPrefixs()
         
     def getDictionaries(self):
-        dictRdf = self.__turtleReader.getNextTupleSet()
+        dictRdf = self.turtleReader.getNextTupleSet()
         return dictRdf
     

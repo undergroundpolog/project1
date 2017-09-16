@@ -7,13 +7,10 @@ Created on 29 ago. 2017
 import ConfigParser
 
 class Config(object):
-    '''
-    classdocs
-    '''
-
+    
     def __init__(self):
         self.config = ConfigParser.ConfigParser()
-        self.config.read('project1.cfg')
+        self.config.read('rdfmongoloader.cfg')
         
     def get(self,section,key):
         return self.config.get(section, key)

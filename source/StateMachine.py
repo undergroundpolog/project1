@@ -8,61 +8,61 @@ import sys
 class StateMachine(object):
 
     def __init__(self):
-        self.__turtleAsDict = {}
-        self.__index = 0
-        self.__lastSeen = None
-        self.__subject = None
+        self.turtleAsDict = {}
+        self.index = 0
+        self.lastSeen = None
+        self.subject = None
     
     def initState(self,turtleAsList):
         try:
-            self.__turtleAsDict = {}
-            self.__index = 0
-            key = turtleAsList[self.__index]
+            self.turtleAsDict = {}
+            self.index = 0
+            key = turtleAsList[self.index]
             key = key.replace('.','\uff0E')
-            self.__turtleAsDict['source'] = key
-            self.__turtleAsDict['semantic'] = {}
-            self.__lastSeen = key
-            self.__subject = key
-            self.__index += 1
+            self.turtleAsDict['source'] = key
+            self.turtleAsDict['semantic'] = {}
+            self.lastSeen = key
+            self.subject = key
+            self.index += 1
             
             #state transition
             self.predicateState(turtleAsList)
         except:
-            print("Error creating dictionary for object "+self.__subject, sys.exc_info()[0])
+            print("Error creating dictionary for object "+self.subject, sys.exc_info()[0])
             raise
             sys.exit()
         
-        return self.__turtleAsDict
+        return self.turtleAsDict
         
     def predicateState(self,turtleAsList):
-        self.__lastSeen = turtleAsList[self.__index]
-        self.__turtleAsDict['semantic'][self.__lastSeen] = None
-        self.__index += 1
+        self.lastSeen = turtleAsList[self.index]
+        self.turtleAsDict['semantic'][self.lastSeen] = None
+        self.index += 1
         
         #state transition
         self.objectState(turtleAsList)
         
     def objectState(self, turtleAsList):
         while True:
-            self.__token = turtleAsList[self.__index + 1]
+            self.__token = turtleAsList[self.index + 1]
             if self.__token == ',':
-                if self.__turtleAsDict['semantic'][self.__lastSeen] == None:
-                    self.__turtleAsDict['semantic'][self.__lastSeen] = [turtleAsList[self.__index]]
+                if self.turtleAsDict['semantic'][self.lastSeen] == None:
+                    self.turtleAsDict['semantic'][self.lastSeen] = [turtleAsList[self.index]]
                 else:
-                    self.__turtleAsDict['semantic'][self.__lastSeen].append(turtleAsList[self.__index])
+                    self.turtleAsDict['semantic'][self.lastSeen].append(turtleAsList[self.index])
                     
-                self.__index += 2
+                self.index += 2
                 
                 #state transition
                 #self.objectState(turtleAsList)
                 continue
                 
             else:
-                if self.__turtleAsDict['semantic'][self.__lastSeen] == None:
-                    self.__turtleAsDict['semantic'][self.__lastSeen] = turtleAsList[self.__index]
+                if self.turtleAsDict['semantic'][self.lastSeen] == None:
+                    self.turtleAsDict['semantic'][self.lastSeen] = turtleAsList[self.index]
                 else:
-                    self.__turtleAsDict['semantic'][self.__lastSeen].append(turtleAsList[self.__index])
-                self.__index += 2
+                    self.turtleAsDict['semantic'][self.lastSeen].append(turtleAsList[self.index])
+                self.index += 2
                 
             if self.__token == ';':
                 self.predicateState(turtleAsList)
