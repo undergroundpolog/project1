@@ -57,6 +57,7 @@ class TurtleReader(object):
         for line in self.file:
             if self.prefixPattern.match(line) != None:
                 alias = aliasPattern.search(line).group().strip()
+                alias = alias.replace(':','')
                 iri = iriPattern.search(line).group().strip()
                 self.prefix[alias] = iri
                 self.index += 1

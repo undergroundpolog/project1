@@ -14,6 +14,8 @@ class RDFLoader(object):
         mongoLoader = MongoLoader();
         batchCount = 1
         threads = []
+        prefixs = parser.getPrefixs()
+        mongoLoader.savePrefixs(prefixs)
         while True:
             rdfLoader = parser.getDictionaries()
             

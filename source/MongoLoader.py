@@ -38,6 +38,9 @@ class MongoLoader(object):
         mongo_port = int(config.get('mongo','port'))
         client = MongoClient(host=mongo_host, port=mongo_port)
         self.db = client[dbName]
+        
+    def savePrefixs(self,prefixs):
+        self.db.prefix.insert_one(prefixs)
     
     def loadTuplesToMongo(self,rdfDict):
         thread = MongoWriterThread(self.db,rdfDict)
