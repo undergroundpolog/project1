@@ -20,7 +20,6 @@ class MongoWriterThread(threading.Thread):
         
     def run(self):
         try:
-            sleep(10)
             self.db.turtle.insert_many(self.dictionaries)
         except:
             print("Error trying to save the document to MongoDB:", sys.exc_info()[0])
