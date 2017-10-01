@@ -27,6 +27,7 @@ will be stored in mongo as:
 }
 ```
 # Query the data
+## The turtle collection
 In the web semantic terminology, the source ID of the subject is present in an attribute called "source". The things that are said about the subject (predicate -> object) are present in the "semantic" map, in which the key is the predicate and the value could be a single object or a list of objects. You will find the tuples in a collection called "turtle".
 ```
 > db.turtle.find({source: 'ns2:98570af6-b237-4cdd-b555-98fe3de26ef8'}).pretty()
@@ -91,8 +92,10 @@ The prefixs can be found in a collection called "prefix":
 	"ns21" : "<http://data.europa.eu/esco/Notation/>",
 	"ns20" : "<http://purl.org/dc/terms/>"
 }
-
 ```
+## The turtlehu collection
+There is another collection called turtlehu which has all the information related to each occupations inside a big nested document. The creation of such documents avoid the circular references.
+
 # Configuration
 Edit the rdfmongoloader.cfg with the appropriate configuration.
 
