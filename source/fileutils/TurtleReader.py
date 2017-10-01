@@ -75,6 +75,7 @@ class TurtleReader(object):
     """
     def getNextTupleSet(self):
         tuples = []
+        sourceIds = []
         
         if self.index >= len(self.line_offset):
             return None
@@ -95,6 +96,8 @@ class TurtleReader(object):
                 entrySoFarAsList = self.entryParser.findall(entrySoFar) 
                 
                 entrySoFarAsDict = self.stateMachine.initState(entrySoFarAsList)
+                if entrySoFarAsDict['source'].startswith('ns2'):
+                    sourceIds.append(entrySoFarAsDict['source'])
                 
                 
                 tuples.append(entrySoFarAsDict)
@@ -102,4 +105,8 @@ class TurtleReader(object):
                 entrySoFar = ''
                 batchIndex += 1
                 
-        return tuples
+        dictInfo = {}
+        dictInfo['tuples'] = tuples
+        dictInfo['source_ids'] = sourceIds
+        return dictInfo
+    

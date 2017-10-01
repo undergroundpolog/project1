@@ -16,6 +16,7 @@ class RDFLoader(object):
         threads = []
         prefixs = parser.getPrefixs()
         mongoLoader.savePrefixs(prefixs)
+        sourceIds = []
         while True:
             rdfLoader = parser.getDictionaries()
             
@@ -23,10 +24,17 @@ class RDFLoader(object):
                 break
             
             batchCount += 1
-            thread = mongoLoader.loadTuplesToMongo(rdfLoader)
+            thread = mongoLoader.loadTuplesToMongo(rdfLoader['tuples'],MongoLoader.STRATEGY_MONGOWRITER)
             threads.append(thread)
-            
+            sourceIds += rdfLoader['source_ids']
         for thread in threads:
             thread.join() 
+            
+#         print "The end"
+#         print sourceIds
+#         print len(sourceIds)
+        print "\nStart creating huge documents"
+        mongoLoader.createHugeDocuments(sourceIds)
+        print ""
     
         

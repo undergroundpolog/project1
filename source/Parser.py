@@ -16,8 +16,9 @@ class Parser(object):
         self.turtleReader.getPrefixs()
         
     def getDictionaries(self):
-        dictRdf = self.turtleReader.getNextTupleSet()
-        return dictRdf
+        dictInfo = self.turtleReader.getNextTupleSet()
+        return dictInfo
     
     def getPrefixs(self):
         return self.turtleReader.getPrefixs()
+    
