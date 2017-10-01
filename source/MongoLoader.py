@@ -121,7 +121,7 @@ class MongoLoader(object):
                     print "Waiting a few seconds before trying again"
                     sleep(7)
                 
-                return self.loadTuplesToMongo(rdfDict)
+                return self.loadTuplesToMongo(rdfDict,strategy)
             else:
                 raise
         return thread
